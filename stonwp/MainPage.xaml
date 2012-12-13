@@ -13,6 +13,16 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar>
+			<shell:ApplicationBar.MenuItems>
+				<shell:ApplicationBarMenuItem IsEnabled="True" Text="About / Settings"/>
+			</shell:ApplicationBar.MenuItems>
+			<shell:ApplicationBarIconButton x:Name="AppBarNew" IconUri="/Assets/AppBar/edit.png" IsEnabled="True" Text="New"/>
+			<shell:ApplicationBarIconButton x:Name="AppBarRefresh" IconUri="/Assets/AppBar/refresh.png" IsEnabled="True" Text="Refresh"/>
+			<shell:ApplicationBarIconButton x:Name="AppBarSearch" IconUri="/Assets/AppBar/feature.search.png" IsEnabled="True" Text="Search"/>
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -39,7 +49,7 @@
         <!--Pivot Control-->
         <phone:Pivot Title="ST on WP">
             <!--Pivot item one-->
-            <phone:PivotItem Header="Trending">
+            <phone:PivotItem x:Name="trendingpage" Header="Trending">
                 <!--Double line list with text wrapping-->
                 <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Items}">
                     <phone:LongListSelector.ItemTemplate>
@@ -54,7 +64,7 @@
             </phone:PivotItem>
 
             <!--Pivot item two-->
-            <phone:PivotItem Header="Watchlist">
+            <phone:PivotItem x:Name="watchlistpage" Header="Watchlist">
                 <!--Double line list no text wrapping-->
                 <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Items}">
                     <phone:LongListSelector.ItemTemplate>
@@ -66,6 +76,9 @@
                             </DataTemplate>
                     </phone:LongListSelector.ItemTemplate>
                 </phone:LongListSelector>
+            </phone:PivotItem>
+            <phone:PivotItem x:Name="homepage" Header="Home" Margin="12,20,12,12">
+            	<Grid Margin="0,0,-12,0"/>
             </phone:PivotItem>
         </phone:Pivot>
 
