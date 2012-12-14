@@ -109,7 +109,10 @@
     </Compile>
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\TweetViewModel.cs" />
+    <Compile Include="Models\TweetModel.cs" />
+    <Compile Include="ViewModels\TweetViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

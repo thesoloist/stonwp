@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using stonwp.Resources;
+using stonwp.Model;
 
 namespace stonwp
 {
@@ -18,9 +19,7 @@ namespace stonwp
         {
             InitializeComponent();
 
-            // Set the data context of the listbox control to the sample data
-            DataContext = App.ViewModel;
-
+            
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
         }

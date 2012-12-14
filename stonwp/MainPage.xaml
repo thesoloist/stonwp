@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:vm="clr-namespace:stonwp.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -12,17 +13,56 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
+    xmlns:viewmodels="clr-namespace:stonwp.ViewModels"
     shell:SystemTray.IsVisible="True">
-	<phone:PhoneApplicationPage.ApplicationBar>
-		<shell:ApplicationBar>
-			<shell:ApplicationBar.MenuItems>
-				<shell:ApplicationBarMenuItem IsEnabled="True" Text="About / Settings"/>
-			</shell:ApplicationBar.MenuItems>
-			<shell:ApplicationBarIconButton x:Name="AppBarNew" IconUri="/Assets/AppBar/edit.png" IsEnabled="True" Text="New"/>
-			<shell:ApplicationBarIconButton x:Name="AppBarRefresh" IconUri="/Assets/AppBar/refresh.png" IsEnabled="True" Text="Refresh"/>
-			<shell:ApplicationBarIconButton x:Name="AppBarSearch" IconUri="/Assets/AppBar/feature.search.png" IsEnabled="True" Text="Search"/>
-		</shell:ApplicationBar>
-	</phone:PhoneApplicationPage.ApplicationBar>
+
+    <phone:PhoneApplicationPage.Resources>
+        <vm:TweetViewModel x:Key="viewModel"/>
+            
+        <DataTemplate x:Key="TweetItemTemplate">
+            <Grid Margin="0,6,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Rectangle Fill="Gray" Height="50" Width="50" Grid.Row="0" Grid.Column="0" 
+                         VerticalAlignment="Top" Margin="0,7,7,0"
+                       Grid.RowSpan="2">
+                </Rectangle>
+                <Image Height="50" Width="50" Grid.Row="0" Grid.Column="0" 
+                         VerticalAlignment="Top" Margin="0,7,7,0"
+                       Grid.RowSpan="2">
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding AvatarUrl}"
+                                     CreateOptions="BackgroundCreation"/>
+                    </Image.Source>
+                </Image>
+                <TextBlock Text="{Binding Author}" Grid.Row="0" Grid.Column="1"
+                                 Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top"/>
+
+                <TextBlock Text="{Binding Tweet}" TextWrapping="Wrap"
+                               Grid.Row="1" Grid.Column="1"
+                               VerticalAlignment="Top"
+                               />
+            </Grid>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem IsEnabled="True" Text="About / Settings"/>
+            </shell:ApplicationBar.MenuItems>
+            <shell:ApplicationBarIconButton x:Name="AppBarNew" IconUri="/Assets/AppBar/edit.png" IsEnabled="True" Text="New"/>
+            <shell:ApplicationBarIconButton x:Name="AppBarRefresh" IconUri="/Assets/AppBar/refresh.png" IsEnabled="True" Text="Refresh"/>
+            <shell:ApplicationBarIconButton x:Name="AppBarSearch" IconUri="/Assets/AppBar/feature.search.png" IsEnabled="True" Text="Search"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -49,18 +89,12 @@
         <!--Pivot Control-->
         <phone:Pivot Title="ST on WP">
             <!--Pivot item one-->
-            <phone:PivotItem x:Name="trendingpage" Header="Trending">
+            <phone:PivotItem x:Name="homepage" Header="Home">
                 <!--Double line list with text wrapping-->
-                <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Items}">
-                    <phone:LongListSelector.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,0,0,17">
-                                <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
-                                <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </phone:LongListSelector.ItemTemplate>
-                </phone:LongListSelector>
+                <phone:LongListSelector Name="HomeTweetlist"
+                                        ItemTemplate="{StaticResource TweetItemTemplate}"
+                                        ItemsSource="{Binding TweetCollection}" />
+                
             </phone:PivotItem>
 
             <!--Pivot item two-->
@@ -68,17 +102,14 @@
                 <!--Double line list no text wrapping-->
                 <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Items}">
                     <phone:LongListSelector.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,0,0,17">
-                                    <TextBlock Text="{Binding LineOne}" TextWrapping="NoWrap" Margin="12,0,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
-                                    <TextBlock Text="{Binding LineThree}" TextWrapping="NoWrap" Margin="12,-6,0,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
-                                </StackPanel>
-                            </DataTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,17">
+                                <TextBlock Text="{Binding LineOne}" TextWrapping="NoWrap" Margin="12,0,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                                <TextBlock Text="{Binding LineThree}" TextWrapping="NoWrap" Margin="12,-6,0,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+                            </StackPanel>
+                        </DataTemplate>
                     </phone:LongListSelector.ItemTemplate>
                 </phone:LongListSelector>
-            </phone:PivotItem>
-            <phone:PivotItem x:Name="homepage" Header="Home" Margin="12,20,12,12">
-            	<Grid Margin="0,0,-12,0"/>
             </phone:PivotItem>
         </phone:Pivot>
 
