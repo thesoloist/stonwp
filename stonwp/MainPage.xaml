@@ -16,46 +16,10 @@
     xmlns:viewmodels="clr-namespace:stonwp.ViewModels"
     shell:SystemTray.IsVisible="True">
 
-    <phone:PhoneApplicationPage.Resources>
-        <vm:TweetViewModel x:Key="viewModel"/>
-            
-        <DataTemplate x:Key="TweetItemTemplate">
-            <Grid Margin="0,6,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Rectangle Fill="Gray" Height="50" Width="50" Grid.Row="0" Grid.Column="0" 
-                         VerticalAlignment="Top" Margin="0,7,7,0"
-                       Grid.RowSpan="2">
-                </Rectangle>
-                <Image Height="50" Width="50" Grid.Row="0" Grid.Column="0" 
-                         VerticalAlignment="Top" Margin="0,7,7,0"
-                       Grid.RowSpan="2">
-                    <Image.Source>
-                        <BitmapImage UriSource="{Binding AvatarUrl}"
-                                     CreateOptions="BackgroundCreation"/>
-                    </Image.Source>
-                </Image>
-                <TextBlock Text="{Binding Author}" Grid.Row="0" Grid.Column="1"
-                                 Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top"/>
-
-                <TextBlock Text="{Binding Tweet}" TextWrapping="Wrap"
-                               Grid.Row="1" Grid.Column="1"
-                               VerticalAlignment="Top"
-                               />
-            </Grid>
-        </DataTemplate>
-    </phone:PhoneApplicationPage.Resources>
-
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem IsEnabled="True" Text="About / Settings"/>
+                <shell:ApplicationBarMenuItem IsEnabled="True" Text="Settings" Click="AppBar_Settings_Click"/>
             </shell:ApplicationBar.MenuItems>
             <shell:ApplicationBarIconButton x:Name="AppBarNew" IconUri="/Assets/AppBar/edit.png" IsEnabled="True" Text="New"/>
             <shell:ApplicationBarIconButton x:Name="AppBarRefresh" IconUri="/Assets/AppBar/refresh.png" IsEnabled="True" Text="Refresh"/>
@@ -90,10 +54,6 @@
         <phone:Pivot Title="ST on WP">
             <!--Pivot item one-->
             <phone:PivotItem x:Name="homepage" Header="Home">
-                <!--Double line list with text wrapping-->
-                <phone:LongListSelector Name="HomeTweetlist"
-                                        ItemTemplate="{StaticResource TweetItemTemplate}"
-                                        ItemsSource="{Binding TweetCollection}" />
                 
             </phone:PivotItem>
 

@@ -33,6 +33,12 @@ namespace stonwp
             }
         }
 
+        private void AppBar_Settings_Click(object sender, EventArgs e)
+        {
+            //Show Settings page
+            NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+        }
+
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{
